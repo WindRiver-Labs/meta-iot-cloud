@@ -1,0 +1,2 @@
+The recipes in this subdirectory are only available if the meta-java layer
+is part of the system configuration.

@@ -7,7 +7,7 @@ PR = "r0"
 
 PACKAGES = "${PN}"
 
-PACKAGECONFIG ??= "c java python node-red"
+PACKAGECONFIG ??= "c python node-red"
 
 PACKAGECONFIG[c] = "\
 	, \

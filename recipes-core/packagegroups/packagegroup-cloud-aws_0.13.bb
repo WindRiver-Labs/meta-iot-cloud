@@ -7,7 +7,7 @@ PR = "r2"
 
 PACKAGES = "${PN}"
 
-PACKAGECONFIG ??= "python java cpp cli"
+PACKAGECONFIG ??= "python cpp cli"
 
 PACKAGECONFIG[python] = "\
 	, \
