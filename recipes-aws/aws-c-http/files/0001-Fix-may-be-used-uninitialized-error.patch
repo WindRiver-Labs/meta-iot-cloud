@@ -1,0 +1,49 @@
+From 376ad8b8ce96f8ee46c8c57a2b4d3cd771a12b93 Mon Sep 17 00:00:00 2001
+From: Robert Yang <liezhi.yang@windriver.com>
+Date: Sun, 15 Aug 2021 07:44:32 +0000
+Subject: [PATCH] Fix compile error with -Og
+
+Fix when compile with -Og:
+source/h2_stream.c: In function 's_stream_update_window':
+source/h2_stream.c:374:52: error: 'sum_size' may be used uninitialized in this function [-Werror=maybe-uninitialized]
+  374 |             stream->synced_data.window_update_size = sum_size;
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+cc1: all warnings being treated as errors
+
+Upstream-Status: Pending
+
+Signed-off-by: Robert Yang <liezhi.yang@windriver.com>
+---
+ source/h2_connection.c | 2 +-
+ source/h2_stream.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/source/h2_connection.c b/source/h2_connection.c
+index 038d65d..9bc80e1 100644
+--- a/source/h2_connection.c
++++ b/source/h2_connection.c
+@@ -2175,7 +2175,7 @@ static void s_connection_update_window(struct aws_http_connection *connection_ba
+     int err = 0;
+     bool cross_thread_work_should_schedule = false;
+     bool connection_open;
+-    size_t sum_size;
++    size_t sum_size = 0;
+     { /* BEGIN CRITICAL SECTION */
+         s_lock_synced_data(connection);
+ 
+diff --git a/source/h2_stream.c b/source/h2_stream.c
+index 2077907..6d1f68a 100644
+--- a/source/h2_stream.c
++++ b/source/h2_stream.c
+@@ -360,7 +360,7 @@ static void s_stream_update_window(struct aws_http_stream *stream_base, size_t i
+     int err = 0;
+     bool stream_is_init;
+     bool cross_thread_work_should_schedule = false;
+-    size_t sum_size;
++    size_t sum_size = 0;
+     { /* BEGIN CRITICAL SECTION */
+         s_lock_synced_data(stream);
+ 
+-- 
+2.31.1
+

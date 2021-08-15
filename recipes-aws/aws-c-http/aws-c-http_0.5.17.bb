@@ -13,6 +13,7 @@ DEPENDS += "\
 
 SRC_URI = "\
     git://github.com/awslabs/${BPN}.git;branch=main \
+    file://0001-Fix-may-be-used-uninitialized-error.patch \
 "
 
 # v0.5.17
