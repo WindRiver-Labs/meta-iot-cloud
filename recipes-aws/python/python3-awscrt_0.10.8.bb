@@ -20,6 +20,9 @@ SRC_URI += "\
     file://Do-not-override-libcrypto-location.patch \
 "
 
+# This recipe doesn't inherit cmake, so it can't work with ccache.
+CCACHE_DISABLE = "1"
+
 SRC_URI[sha256sum] = "c6859e35c57922f175b587e02bfb662ce30a06c9aa688a7303112c91e25265c6"
 
 do_configure_prepend() {
