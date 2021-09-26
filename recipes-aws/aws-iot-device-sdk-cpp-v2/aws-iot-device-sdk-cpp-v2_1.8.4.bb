@@ -10,6 +10,8 @@ DEPENDS += "\
     aws-crt-cpp \
 "
 
+RDEPENDS_${PN}-samples += "binutils"
+
 SRC_URI = "\
     git://github.com/aws/${BPN}.git;branch=main \
     file://Add-library-versioning.patch \
